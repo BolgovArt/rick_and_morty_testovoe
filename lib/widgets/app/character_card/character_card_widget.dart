@@ -33,7 +33,7 @@ class CharacterCard extends StatelessWidget {
             isFavorite ? Icons.star : Icons.star_border,
             color: Colors.yellow[700],
           ),
-          onPressed: onFavoriteToggle, // Вызываем callback при смене избранного
+          onPressed: onFavoriteToggle,
         ),
       ),
     );

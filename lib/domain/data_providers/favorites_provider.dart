@@ -1,7 +1,6 @@
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// lib/providers/favorites_provider.dart
 // FavoritesProvider отвечает за управление списком избранных персонажей.
 // Избранные сохраняются в SharedPreferences в виде списка JSON-строк.
 

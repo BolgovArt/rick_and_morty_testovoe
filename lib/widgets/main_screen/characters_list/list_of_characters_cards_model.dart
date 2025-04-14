@@ -1,43 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty_testovoe/domain/data_providers/character_provider.dart';
+import 'package:rick_and_morty_testovoe/domain/data_providers/favorites_provider.dart';
+import 'package:rick_and_morty_testovoe/domain/entity/character.dart';
 
-class ListOfCharactersCardsModel extends ChangeNotifier{
-  final ScrollController _scrollController = ScrollController();
-  final CharacterProvider provider;
+class ListOfCharactersCardsModel extends ChangeNotifier {
+  final CharacterProvider characterProvider;
+  final FavoritesProvider favoritesProvider;
+  final ScrollController scrollController = ScrollController();
 
-  get scrollController => _scrollController;
+  ListOfCharactersCardsModel({
+    required this.characterProvider,
+    required this.favoritesProvider,
+  }) {
+    _init();
+  }
 
-  ListOfCharactersCardsModel({required this.provider}) {
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge &&
-          _scrollController.position.pixels != 0 &&
-          !provider.isLoadingProgress) {
-        provider.loadNextPage();
-      }
-    });
+  bool get isLoadingProgress => characterProvider.isLoadingProgress;
+  //
+  List<Character> get characters => characterProvider.characters;
+  //
+  bool isFavorite(Character character) => favoritesProvider.isFavorite(character);
 
-    if (provider.characters.isEmpty) {
-      provider.loadNextPage();
+  void _init() {
+    scrollController.addListener(_handleScroll);
+    if (characterProvider.characters.isEmpty) {
+      characterProvider.loadNextPage();
+    }
+  }
+// 
+  void toggleFavorite(Character character) {
+    isFavorite(character)
+        ? favoritesProvider.removeFavorite(character)
+        : favoritesProvider.addFavorite(character);
+    
+    notifyListeners();
+  }
+
+  void _handleScroll() {
+    if (_shouldLoadNextPage) {
+      characterProvider.loadNextPage();
     }
   }
 
-  // void dispose() {
-  //   _scrollController.dispose();
-  // }
+  bool get _shouldLoadNextPage =>
+      scrollController.position.pixels == scrollController.position.maxScrollExtent &&
+      !isLoadingProgress;
+
+  @override
+  void dispose() {
+    scrollController
+      ..removeListener(_handleScroll)
+      ..dispose();
+    super.dispose();
+  }
 }
-
-
-//     @override
-//   void initState() {
-//     super.initState();
-//     // Отложенная настройка слушателя, когда провайдер уже инициализирован // Настраиваем scroll listener для дозагрузки
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       final provider = Provider.of<CharacterProvider>(context, listen: false);
-//       _setupScrollListener(provider);
-//       // Если список пуст, выполняем начальную загрузку
-//       if (provider.characters.isEmpty) {
-//         provider.loadNextPage();
-//       }
-//     });
-//   }
-// }

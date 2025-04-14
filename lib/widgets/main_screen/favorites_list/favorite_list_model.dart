@@ -4,10 +4,13 @@ import 'package:rick_and_morty_testovoe/domain/entity/character.dart';
 
 class FavoriteListModel extends ChangeNotifier{
   final FavoritesProvider _favoritesProvider; 
+
+//
   List<Character> get favorites => _favoritesProvider.favorites;
 
   FavoriteListModel(this._favoritesProvider);
-
+  
+//
   void removeFavorite(Character character) {
     _favoritesProvider.removeFavorite(character);
     notifyListeners();

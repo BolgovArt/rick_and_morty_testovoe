@@ -1,7 +1,3 @@
-// lib/providers/character_provider.dart
-// CharacterProvider отвечает за получение списка персонажей с API с поддержкой пагинации,
-// а также за кэширование полученных данных для оффлайн-режима.
-
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty_testovoe/domain/entity/character.dart';
 import 'package:rick_and_morty_testovoe/domain/services/storage_service.dart';
@@ -58,3 +54,6 @@ class CharacterProvider with ChangeNotifier {
     await loadNextPage();
   }
 }
+
+// character_provider.dart отвечает за получение списка персонажей с API с поддержкой пагинации,
+// а также за кэширование полученных данных для оффлайн-режима.

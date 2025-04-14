@@ -1,67 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_testovoe/di/service_locator.dart';
-import 'package:rick_and_morty_testovoe/domain/data_providers/character_provider.dart';
-import 'package:rick_and_morty_testovoe/domain/data_providers/favorites_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty_testovoe/domain/entity/character.dart';
-import 'package:rick_and_morty_testovoe/widgets/main_screen/character_card.dart';
+import 'package:rick_and_morty_testovoe/widgets/app/character_card/character_card_widget.dart';
 import 'package:rick_and_morty_testovoe/widgets/main_screen/characters_list/list_of_characters_cards_model.dart';
 
 class ListOfCharacterCardsWidget extends StatefulWidget {
   const ListOfCharacterCardsWidget({super.key});
 
   @override
-  State<ListOfCharacterCardsWidget> createState() => _ListOfCharactersState();
+  State<ListOfCharacterCardsWidget> createState() => _ListOfCharacterCardsWidgetState();
 }
 
-class _ListOfCharactersState extends State<ListOfCharacterCardsWidget> {
-
-  final CharacterProvider _characterProvider = getIt<CharacterProvider>();
-  final FavoritesProvider _favoritesProvider = getIt<FavoritesProvider>();
-  final ListOfCharactersCardsModel _model = getIt<ListOfCharactersCardsModel>();
-  @override
-  void initState() {
-    super.initState();
-    _characterProvider.addListener(_updateUI);
-    _favoritesProvider.addListener(_updateUI);
-    _model.addListener(_updateUI);
-  }
-
-  @override
-  void dispose() {
-    _characterProvider.removeListener(_updateUI);
-    _favoritesProvider.removeListener(_updateUI);
-    _model.removeListener(_updateUI);
-    super.dispose();
-  }
-
-  void _updateUI() => setState(() {});
-
-
+class _ListOfCharacterCardsWidgetState extends State<ListOfCharacterCardsWidget> {
   @override
   Widget build(BuildContext context) {
-        // final characterProvider = getIt<CharacterProvider>();
-        // final favoritesProvider = getIt<FavoritesProvider>();
-        // final model = getIt<ListOfCharactersCardsModel>();
+        final model = context.watch<ListOfCharactersCardsModel>();
     return ListView.builder(
-      
-        controller: _model.scrollController,
-        itemCount: _characterProvider.characters.length +
-            (_characterProvider.isLoadingProgress ? 1 : 0),
+        controller: model.scrollController,
+        itemCount: model.characters.length +
+            (model.isLoadingProgress ? 1 : 0),
         itemBuilder: (context, index) {
-          if (index < _characterProvider.characters.length) {
-            final Character character = _characterProvider.characters[index];
-            final bool isFav = _favoritesProvider.isFavorite(character);
+          if (index < model.characters.length) {
+            final Character character = model.characters[index];
+            // final bool isFav = model.favoritesProvider.isFavorite(character);
             return CharacterCard(
               character: character,
-              isFavorite: isFav,
-              onFavoriteToggle: () {
-                // При нажатии переключается состояние избранного через провайдер
-                if (isFav) {
-                  _favoritesProvider.removeFavorite(character);
-                } else {
-                  _favoritesProvider.addFavorite(character);
-                }
-              },
+              isFavorite: model.isFavorite(character),
+              onFavoriteToggle: () => model.toggleFavorite(character),
             );
           } else {
             // Индикатор загрузки при дозагрузке данных
