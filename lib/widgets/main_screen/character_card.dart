@@ -15,8 +15,10 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      color: theme.colorScheme.primaryContainer,
       child: ListTile(
         leading: Image.network(
           character.image,
@@ -31,7 +33,7 @@ class CharacterCard extends StatelessWidget {
         trailing: IconButton(
           icon: Icon(
             isFavorite ? Icons.star : Icons.star_border,
-            color: Colors.yellow[700],
+            color: theme.colorScheme.secondary
           ),
           onPressed: onFavoriteToggle,
         ),

@@ -8,8 +8,8 @@ class CharacterProvider with ChangeNotifier {
   final StorageService storageService;
 
   CharacterProvider({required this.apiService, required this.storageService}) {
-    loadCharactersFromStorage(); // Загружаем данные из кэша при инициализации.
-    loadNextPage(); // Загружаем первую страницу с API.
+    loadCharactersFromStorage();
+    loadNextPage();
   }
 
   List<Character> _characters = [];
@@ -19,7 +19,7 @@ class CharacterProvider with ChangeNotifier {
   List<Character> get characters => _characters;
   bool get isLoadingProgress => _isLoadingInProgress;
 
-  // Загружаем персонажей из кэша, если они уже сохранены.
+  // загружаем персонажей из кэша, если они уже сохранены
   void loadCharactersFromStorage() {
     final storage = storageService.getCachedCharacters();
     if (storage.isNotEmpty) {
@@ -28,7 +28,7 @@ class CharacterProvider with ChangeNotifier {
     }
   }
 
-  // Загружаем следующую страницу с API (с пагинацией)
+  // загружаем следующую страницу с API (с пагинацией)
   Future<void> loadNextPage() async {
     if (_isLoadingInProgress) return; // !
     _isLoadingInProgress = true;

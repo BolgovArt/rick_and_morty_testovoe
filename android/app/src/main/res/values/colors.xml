@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Основной цвет фона -->
+    <color name="launchBackground">#FFDC50FF</color> <!-- Жёлтый (FF = 100% opacity) -->
+    
+    <!-- Цвета для статус-бара -->
+    <color name="statusBarColor">#00000000</color> <!-- Прозрачный -->
+</resources>

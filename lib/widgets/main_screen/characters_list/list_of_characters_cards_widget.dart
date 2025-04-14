@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty_testovoe/domain/entity/character.dart';
-import 'package:rick_and_morty_testovoe/widgets/app/character_card/character_card_widget.dart';
+import 'package:rick_and_morty_testovoe/widgets/main_screen/character_card.dart';
 import 'package:rick_and_morty_testovoe/widgets/main_screen/characters_list/list_of_characters_cards_model.dart';
 
 class ListOfCharacterCardsWidget extends StatefulWidget {
@@ -10,7 +10,6 @@ class ListOfCharacterCardsWidget extends StatefulWidget {
   @override
   State<ListOfCharacterCardsWidget> createState() => _ListOfCharacterCardsWidgetState();
 }
-
 class _ListOfCharacterCardsWidgetState extends State<ListOfCharacterCardsWidget> {
   @override
   Widget build(BuildContext context) {

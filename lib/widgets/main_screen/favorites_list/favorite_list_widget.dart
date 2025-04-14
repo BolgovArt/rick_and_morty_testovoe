@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rick_and_morty_testovoe/widgets/app/character_card/character_card_widget.dart';
+import 'package:rick_and_morty_testovoe/widgets/main_screen/character_card.dart';
 import 'package:rick_and_morty_testovoe/widgets/main_screen/favorites_list/favorite_list_model.dart';
 
 class FavoriteListWidget extends StatelessWidget {
